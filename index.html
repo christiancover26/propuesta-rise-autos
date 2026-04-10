@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta - Rise Autos Pagina Web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Rise Autos brand: black, white, gold accent */
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --cream: #f7f7f7;
+    --sand: #e5e5e5;
+    --warm-100: #d4d4d4;
+    --warm-200: #a8a8a8;
+    --warm-300: #808080;
+    --warm-400: #5a5a5a;
+    --warm-500: #404040;
+    --warm-600: #2a2a2a;
+    --warm-700: #1c1c1c;
+    --warm-800: #141414;
+    --gold: #c9a227;
+    --gold-light: #e5c04f;
+    --gold-muted: #a88620;
+    --display: 'Kanit', system-ui, sans-serif;
+    --sans: 'Sora', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--white);
+    color: var(--black);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: rgba(201,162,39,0.18);
+    color: var(--black);
+  }
+
+  /* Tabular figures for prices and data */
+  .price-big, .total-val, .breakdown td:last-child, .kpi-val, .hero-meta-item span, .pay-amount, .addon-cost {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.4s ease;
+  }
+
+  .nav.scrolled {
+    background: rgba(26,26,24,0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0.85rem 3rem;
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--warm-300);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--black);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 6rem 3rem 5rem;
+    position: relative;
+  }
+
+  .hero-content {
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards 0.3s;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards 0.5s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold-light);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--warm-300);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards 0.7s;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--warm-700);
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards 0.9s;
+  }
+
+  .hero-meta-item label {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-400);
+    margin-bottom: 0.35rem;
+  }
+
+  .hero-meta-item span {
+    font-family: var(--display);
+    font-size: 0.95rem;
+    color: var(--warm-200);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 3rem;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 1rem;
+    color: var(--black);
+    max-width: 580px;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--warm-400);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+  }
+
+  .sep {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    height: 1px;
+    background: var(--sand);
+  }
+
+  /* ─── OBJECTIVES ─── */
+  .objectives {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--sand);
+    border: 1px solid var(--sand);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .obj {
+    background: var(--white);
+    padding: 2.25rem 2rem;
+    transition: background 0.3s ease;
+  }
+
+  .obj:hover { background: var(--cream); }
+
+  .obj-num {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .obj h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.65rem;
+    line-height: 1.3;
+  }
+
+  .obj p {
+    font-size: 0.84rem;
+    color: var(--warm-400);
+    line-height: 1.7;
+  }
+
+  /* ─── FEATURES ─── */
+  .feat-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .feat-group {
+    padding: 2.5rem 2rem;
+    border-right: 1px solid var(--warm-100);
+  }
+
+  .feat-group:last-child { border-right: none; }
+
+  .feat-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .feat-num {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .feat-label {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .feat-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feat-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.82rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--sand);
+  }
+
+  .feat-item:last-child { border-bottom: none; }
+
+  .feat-dot { display: none; }
+
+  .feat-item strong {
+    color: var(--black);
+    font-weight: 600;
+    font-size: 0.84rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .feat-item .feat-desc {
+    color: var(--warm-400);
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  /* ─── DARK BAND ─── */
+  .band {
+    background: var(--black);
+    color: var(--white);
+    padding: 6rem 3rem;
+  }
+
+  .band-inner {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .band .section-title { color: var(--white); }
+  .band .section-desc { color: var(--warm-400); }
+  .band .section-eyebrow { color: var(--gold); }
+
+  /* ─── KPIs ─── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--warm-700);
+    border: 1px solid var(--warm-700);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-top: 2.5rem;
+  }
+
+  .kpi {
+    background: var(--warm-800);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+
+  .kpi:hover { background: var(--warm-700); }
+
+  .kpi-val {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--gold-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .kpi-name {
+    font-size: 0.65rem;
+    color: var(--warm-400);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .aside-note {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 2px solid var(--gold-muted);
+    font-size: 0.84rem;
+    color: var(--warm-400);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .aside-note strong { color: var(--white); font-style: normal; }
+  .aside-note--light { border-color: var(--gold); color: var(--warm-500); }
+  .aside-note--light strong { color: var(--black); }
+
+  /* ─── STACK / ARCHITECTURE ─── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 3rem;
+  }
+
+  .stack-layer {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stack-layer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--black);
+    opacity: 0.08;
+    transition: opacity 0.35s ease, background 0.35s ease;
+  }
+
+  .stack-layer:hover {
+    transform: translateY(-3px);
+    border-color: var(--warm-200);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.06);
+  }
+
+  .stack-layer:hover::before {
+    background: var(--gold);
+    opacity: 1;
+  }
+
+  .stack-layer-head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stack-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+  }
+
+  .stack-label {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--warm-400);
+  }
+
+  .stack-layer h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+    color: var(--black);
+  }
+
+  .stack-layer p {
+    font-size: 0.82rem;
+    color: var(--warm-400);
+    line-height: 1.65;
+    margin-bottom: 1.1rem;
+  }
+
+  .stack-meta {
+    font-family: var(--display);
+    font-size: 0.72rem;
+    font-style: italic;
+    color: var(--gold-muted);
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--sand);
+  }
+
+  .stack-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--warm-200);
+    width: 32px;
+  }
+
+  .stack-arrow svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ─── FLOW ─── */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    counter-reset: step;
+  }
+
+  .flow-item {
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .flow-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 1.15rem;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--sand);
+    z-index: 0;
+  }
+
+  .flow-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2px solid var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--gold);
+    position: relative;
+    z-index: 1;
+    transition: all 0.25s ease;
+  }
+
+  .flow-item:hover .flow-dot {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--gold-light);
+  }
+
+  .flow-item h4 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .flow-item p {
+    font-size: 0.72rem;
+    color: var(--warm-400);
+    line-height: 1.5;
+  }
+
+  /* ─── PREVIEW ─── */
+  .preview-band {
+    background: var(--cream);
+    padding: 6rem 3rem;
+  }
+
+  .preview-inner {
+    max-width: 1020px;
+    margin: 0 auto;
+  }
+
+  .preview-band .section-title { color: var(--black); }
+  .preview-band .section-desc { color: var(--warm-400); }
+
+  .mock-tabs {
+    display: flex;
+    gap: 0;
+    margin: 2.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--warm-100);
+  }
+
+  .mock-tab {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--warm-300);
+    background: none;
+    border: none;
+    padding: 0.65rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    letter-spacing: 0.01em;
+  }
+
+  .mock-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.2s ease;
+  }
+
+  .mock-tab:hover { color: var(--warm-500); }
+
+  .mock-tab.active {
+    color: var(--black);
+    font-weight: 600;
+  }
+
+  .mock-tab.active::after {
+    background: var(--black);
+  }
+
+  .browser {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06), 0 24px 80px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .browser-bar {
+    background: #f5f5f4;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px solid #e8e7e5;
+  }
+
+  .browser-dots { display: flex; gap: 6px; }
+  .browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .browser-dots span:nth-child(1) { background: #ff5f57; }
+  .browser-dots span:nth-child(2) { background: #febc2e; }
+  .browser-dots span:nth-child(3) { background: #28c840; }
+
+  .browser-url {
+    flex: 1;
+    background: var(--white);
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.68rem;
+    color: var(--warm-400);
+    text-align: center;
+    border: 1px solid #e8e7e5;
+  }
+
+  .browser-url b { color: var(--black); font-weight: 600; }
+
+  .mock-view { display: none; }
+  .mock-view.active { display: block; }
+
+  /* Mock: Home */
+  .m-hero {
+    background: #111;
+    color: var(--white);
+    padding: 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 280px;
+    overflow: hidden;
+  }
+
+  .m-hero-content {
+    padding: 2.5rem 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .m-hero-visual {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1f1f1f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .m-hero-visual::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,150,47,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .m-hero-car {
+    width: 180px; height: 80px;
+    position: relative;
+  }
+
+  .m-hero-car svg {
+    width: 100%; height: 100%;
+    stroke: rgba(255,255,255,0.25);
+    fill: none;
+    stroke-width: 0.8;
+  }
+
+  .m-nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 2;
+  }
+
+  .m-nav-brand {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .m-nav-items {
+    display: flex; gap: 1.2rem; list-style: none;
+    font-size: 0.5rem; color: rgba(255,255,255,0.45);
+    letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500;
+  }
+
+  .m-hero-tag {
+    font-size: 0.48rem; color: var(--gold); letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem;
+  }
+
+  .m-hero h2 {
+    font-family: var(--display); font-size: 1.5rem;
+    font-weight: 500; line-height: 1.2; margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .m-hero h2 em { color: var(--gold-light); font-style: normal; font-weight: 300; }
+
+  .m-hero p {
+    font-size: 0.62rem; color: rgba(255,255,255,0.4);
+    max-width: 240px; line-height: 1.65; margin-bottom: 1.2rem;
+  }
+
+  .m-cta-row { display: flex; gap: 0.5rem; align-items: center; }
+
+  .m-cta {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: var(--white);
+    color: #111; font-size: 0.52rem; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0.55rem 1.1rem; border-radius: 6px;
+  }
+
+  .m-cta--ghost {
+    background: transparent; border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .m-stats {
+    display: flex; gap: 2rem;
+    padding: 1.2rem 2.5rem;
+    background: #111;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .m-stat {
+    display: flex; flex-direction: column;
+  }
+
+  .m-stat-val {
+    font-family: var(--display);
+    font-size: 1rem; font-weight: 600;
+    color: var(--white);
+  }
+
+  .m-stat-label {
+    font-size: 0.45rem; color: rgba(255,255,255,0.3);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
+  }
+
+  /* Mock: Cards */
+  .m-cards-section {
+    padding: 1.75rem 2.5rem 2rem;
+    background: #fafaf8;
+  }
+
+  .m-cards-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 1rem;
+  }
+
+  .m-cards-header h3 {
+    font-family: var(--display);
+    font-size: 0.85rem; font-weight: 600;
+  }
+
+  .m-cards-header span {
+    font-size: 0.52rem; color: var(--warm-400);
+    font-weight: 500; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--warm-200);
+    padding-bottom: 1px;
+  }
+
+  .m-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+  }
+
+  .m-card {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .m-card-img {
+    height: 80px;
+    background: linear-gradient(145deg, #f0efed 0%, #e8e7e3 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .m-card-img svg {
+    width: 48px; height: 24px;
+    stroke: var(--warm-200);
+    fill: none; stroke-width: 0.8;
+    opacity: 0.6;
+  }
+
+  .m-card-tag {
+    position: absolute; top: 0.4rem; left: 0.4rem;
+    font-size: 0.38rem; font-weight: 600;
+    background: var(--black); color: var(--white);
+    padding: 0.15rem 0.45rem; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .m-card-body { padding: 0.7rem 0.75rem; }
+
+  .m-card-body h4 {
+    font-size: 0.68rem; font-weight: 600;
+    margin-bottom: 0.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .m-card-meta {
+    font-size: 0.48rem; color: var(--warm-400);
+    margin-bottom: 0.5rem;
+    display: flex; gap: 0.5rem; align-items: center;
+  }
+
+  .m-card-footer {
+    display: flex; justify-content: space-between;
+    align-items: center;
+    padding-top: 0.45rem;
+    border-top: 1px solid #f0f0ee;
+  }
+
+  .m-card-price {
+    font-weight: 700; font-size: 0.78rem;
+    letter-spacing: -0.02em;
+  }
+
+  .m-card-credit {
+    font-size: 0.42rem; color: var(--warm-400); font-weight: 500;
+    background: #f5f5f3; padding: 0.15rem 0.4rem; border-radius: 3px;
+  }
+
+  /* Mock: Inventory */
+  .m-inv {
+    padding: 1.75rem 2.5rem 2rem;
+  }
+
+  .m-inv-top {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 1.2rem;
+  }
+
+  .m-inv-top h3 {
+    font-family: var(--display); font-size: 0.9rem; font-weight: 600;
+  }
+
+  .m-inv-count {
+    font-size: 0.5rem; color: var(--warm-400); font-weight: 400;
+    margin-left: 0.4rem;
+  }
+
+  .m-pills { display: flex; gap: 0.3rem; }
+
+  .m-pill {
+    font-size: 0.48rem; font-weight: 500;
+    padding: 0.3rem 0.65rem; border-radius: 6px;
+    background: #f5f5f3; border: 1px solid #eee;
+    color: var(--warm-500);
+  }
+
+  .m-pill--on { background: var(--black); color: var(--white); border-color: var(--black); }
+
+  /* Mock: Finance */
+  .m-fin {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 320px;
+  }
+
+  .m-fin-text {
+    padding: 2.5rem 2.5rem;
+    background: #111;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .m-fin-text h3 {
+    font-family: var(--display);
+    font-size: 1rem; font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--white);
+  }
+
+  .m-fin-text p {
+    font-size: 0.62rem; color: rgba(255,255,255,0.45);
+    line-height: 1.7; margin-bottom: 1.2rem;
+  }
+
+  .m-fin-steps {
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+
+  .m-fin-step {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.56rem; color: rgba(255,255,255,0.65); font-weight: 400;
+  }
+
+  .m-fin-step i {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-style: normal; font-family: var(--display);
+    font-size: 0.48rem; font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .m-calc {
+    background: #fafaf8;
+    padding: 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .m-calc-title {
+    font-size: 0.7rem; font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: var(--display);
+  }
+
+  .m-calc-row {
+    display: flex; justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.58rem;
+  }
+
+  .m-calc-row span:first-child { color: var(--warm-400); }
+  .m-calc-row span:last-child { font-weight: 600; color: var(--black); }
+
+  .m-calc-result {
+    background: var(--black); border-radius: 10px;
+    padding: 1rem; text-align: center; margin-top: 1rem;
+  }
+
+  .m-calc-result small {
+    display: block; font-size: 0.42rem; color: rgba(255,255,255,0.4);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+
+  .m-calc-result strong {
+    font-family: var(--display); font-size: 1.2rem;
+    color: var(--gold-light); font-weight: 600;
+  }
+
+  /* ─── PRICING ─── */
+  .plan-switcher {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--warm-700);
+    border-radius: 10px;
+    overflow: hidden;
+    width: fit-content;
+  }
+
+  .plan-btn {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warm-400);
+    background: transparent;
+    border: none;
+    padding: 0.75rem 1.75rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .plan-btn:not(:last-child) { border-right: 1px solid var(--warm-700); }
+
+  .plan-btn.active {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .plan-btn:hover:not(.active) { background: rgba(255,255,255,0.04); }
+
+  .plan-view { display: none; }
+  .plan-view.active { display: block; }
+
+  .price-card {
+    background: var(--warm-800);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-card-eyebrow {
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+
+  .price-card-title {
+    font-family: var(--display);
+    font-size: 1.3rem; font-weight: 500;
+    color: var(--white); margin-bottom: 0.3rem;
+  }
+
+  .price-card-sub {
+    font-size: 0.82rem; color: var(--warm-400);
+    margin-bottom: 1.75rem;
+  }
+
+  .price-big {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 3rem);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .price-big small {
+    font-size: 0.35em;
+    font-family: var(--sans);
+    font-style: normal;
+    font-weight: 500;
+    color: var(--warm-400);
+    vertical-align: super;
+    letter-spacing: 0.08em;
+  }
+
+  .price-monthly {
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  .price-monthly em {
+    font-style: normal;
+    color: var(--warm-400);
+    font-size: 0.72rem;
+  }
+
+  /* Breakdown table */
+  .breakdown {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0;
+  }
+
+  .breakdown th {
+    text-align: left;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-500);
+    padding: 0 0 0.65rem;
+    border-bottom: 1px solid var(--warm-700);
+  }
+
+  .breakdown th:last-child { text-align: right; }
+
+  .breakdown td {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.82rem;
+    color: var(--warm-300);
+  }
+
+  .breakdown td:last-child {
+    text-align: right;
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--white);
+    font-size: 0.9rem;
+  }
+
+  .breakdown tr:last-child td { border-bottom: none; }
+
+  .breakdown .bk-total td {
+    border-top: 1px solid var(--warm-600);
+    border-bottom: none;
+    padding-top: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .breakdown .bk-total td:last-child {
+    font-size: 1.1rem;
+    color: var(--gold-light);
+  }
+
+  .price-note {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--gold-muted);
+    font-size: 0.78rem;
+    color: var(--warm-400);
+    line-height: 1.65;
+    font-style: italic;
+  }
+
+  .price-note strong {
+    color: var(--white);
+    font-style: normal;
+  }
+
+  /* Compare label */
+  .plan-recommend {
+    display: inline-block;
+    font-size: 0.52rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* ─── ADDONS ─── */
+  .addons-title-row {
+    display: flex; justify-content: space-between;
+    align-items: baseline; margin-bottom: 1.25rem;
+  }
+
+  .addons-heading {
+    font-family: var(--display);
+    font-size: 1.4rem; font-weight: 500;
+    color: var(--white);
+  }
+
+  .addons-sub {
+    font-size: 0.78rem; color: var(--warm-500);
+  }
+
+  .addons-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .addon {
+    border: 1px solid var(--warm-700);
+    border-radius: 14px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    user-select: none;
+  }
+
+  .addon:hover { border-color: var(--warm-500); }
+
+  .addon.on {
+    border-color: var(--gold);
+    background: rgba(184,150,47,0.04);
+  }
+
+  .addon-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .addon-check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--warm-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .addon.on .addon-check {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .addon-check svg {
+    width: 13px; height: 13px;
+    stroke: var(--black);
+    stroke-width: 3; fill: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .addon.on .addon-check svg { opacity: 1; }
+
+  .addon-cost {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .addon-cost small {
+    font-size: 0.5em; font-family: var(--sans);
+    font-style: normal; color: var(--warm-500);
+  }
+
+  .addon h4 {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.3rem;
+  }
+
+  .addon p {
+    font-size: 0.75rem; color: var(--warm-400);
+    line-height: 1.6;
+  }
+
+  /* ─── TOTAL ─── */
+  .total-strip {
+    position: sticky; bottom: 0; z-index: 100;
+    background: rgba(26,26,24,0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--warm-700);
+    padding: 1rem 3rem;
+  }
+
+  .total-strip-inner {
+    max-width: 980px; margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-left { display: flex; align-items: baseline; gap: 1.5rem; }
+
+  .total-label {
+    font-size: 0.55rem; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--warm-500);
+  }
+
+  .total-val {
+    font-family: var(--display);
+    font-size: 1.6rem; font-style: italic;
+    color: var(--white);
+    transition: all 0.3s ease;
+  }
+
+  .total-val small {
+    font-size: 0.4em; font-family: var(--sans);
+    font-style: normal; color: var(--warm-500);
+    vertical-align: super; font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .total-note {
+    font-size: 0.7rem; color: var(--warm-500);
+    border-left: 1px solid var(--warm-700);
+    padding-left: 1.5rem;
+  }
+
+  .total-right { display: flex; gap: 2.5rem; }
+
+  .total-half {
+    display: flex; flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .total-half label {
+    font-size: 0.48rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--warm-500);
+  }
+
+  .total-half strong {
+    color: var(--gold-light); font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* ─── PAYMENT ─── */
+  .pay-cols {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 2rem;
+  }
+
+  .pay-card {
+    border: 1px solid var(--sand);
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: border-color 0.25s ease;
+  }
+
+  .pay-card:hover { border-color: var(--warm-200); }
+
+  .pay-card-num {
+    font-family: var(--display);
+    font-size: 2.2rem; font-style: italic;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .pay-card h3 { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+  .pay-card p { font-size: 0.82rem; color: var(--warm-400); line-height: 1.6; }
+
+  .pay-card .pay-amount {
+    font-family: var(--display);
+    font-size: 1.6rem; font-style: italic;
+    color: var(--black); margin-top: 1rem;
+  }
+
+  /* ─── TIMELINE ─── */
+  .tl { margin-top: 3rem; }
+
+  .tl-item {
+    display: grid; grid-template-columns: 72px 1fr;
+    gap: 1.5rem; padding-bottom: 2rem;
+    position: relative;
+  }
+
+  .tl-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 35px; top: 2.5rem; bottom: 0;
+    width: 1px; background: var(--sand);
+  }
+
+  .tl-week {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--gold);
+    text-align: center;
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 0.55rem;
+    height: fit-content;
+  }
+
+  .tl-body h4 { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .tl-body p { font-size: 0.82rem; color: var(--warm-400); line-height: 1.65; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--black);
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+
+  .footer-name {
+    font-family: var(--display);
+    font-size: 1.2rem; font-style: italic;
+    color: var(--warm-300);
+    margin-bottom: 0.35rem;
+  }
+
+  .footer p { font-size: 0.72rem; color: var(--warm-500); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .stack-grid {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .stack-arrow {
+      width: 100%;
+      transform: rotate(90deg);
+      padding: 0.35rem 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    section, .band, .preview-band { padding: 4rem 1.5rem; }
+    .nav { padding: 1rem 1.5rem; }
+    .nav.scrolled { padding: 0.75rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3.5rem; }
+    .hero-meta { flex-direction: column; gap: 1rem; }
+    .objectives { grid-template-columns: 1fr; }
+    .feat-cols { grid-template-columns: 1fr; }
+    .feat-group { border-right: none; border-bottom: 1px solid var(--warm-100); }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .flow { grid-template-columns: repeat(3, 1fr); }
+    .m-cards { grid-template-columns: 1fr 1fr; }
+    .m-fin { grid-template-columns: 1fr; }
+    .addons-list { grid-template-columns: 1fr; }
+    .price-card-top { flex-direction: column; gap: 1.5rem; }
+    .pay-cols { grid-template-columns: 1fr; }
+    .total-strip { padding: 1rem 1.5rem; }
+    .total-strip-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .total-left { flex-direction: column; gap: 0.3rem; }
+    .total-note { border-left: none; padding-left: 0; }
+    .footer { padding: 3rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .flow { grid-template-columns: 1fr 1fr; }
+    .m-cards { grid-template-columns: 1fr; }
+    .m-nav-items { display: none; }
+  }
+
+  @media print {
+    .nav, .total-strip { display: none; }
+    .hero { min-height: auto; page-break-after: always; }
+    .browser { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.vis { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-logo">Rise Autos</div>
+  <ul class="nav-links">
+    <li><a href="#que">Que incluye</a></li>
+    <li><a href="#stack">Arquitectura</a></li>
+    <li><a href="#precio">Inversion</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Propuesta de proyecto</div>
+    <h1 class="hero-title">Rise Autos,<br><em>en linea.</em></h1>
+    <p class="hero-desc">Una pagina web profesional donde tus clientes ven tu inventario, agendan cita por el auto que les interesa, y te marcan directo. Con panel admin para manejar el inventario y un CRM interno para que tus vendedores lleven seguimiento. Todo en un solo lugar.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><label>Fecha</label><span>9 de Abril, 2026</span></div>
+      <div class="hero-meta-item"><label>Preparado por</label><span>Christian</span></div>
+      <div class="hero-meta-item"><label>Vigencia</label><span>30 dias</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="reveal">
+  <div class="section-eyebrow">El punto de partida</div>
+  <h2 class="section-title">Tu inventario merece una pagina que lo haga ver bien</h2>
+  <p class="section-desc">Hoy tus autos viven en Instagram y WhatsApp. Funciona, pero no es tuyo y limita. Esta propuesta arma una pagina web donde todo se ve en un lugar, el cliente te puede marcar directo, tu decides que se publica, y tus vendedores llevan seguimiento sin perder prospectos.</p>
+  <div class="objectives">
+    <div class="obj">
+      <div class="obj-num">i.</div>
+      <h3>Tu inventario siempre visible</h3>
+      <p>Una pagina donde cualquiera puede ver todos tus autos con fotos, precios y detalles. Facil de navegar desde celular o computadora.</p>
+    </div>
+    <div class="obj">
+      <div class="obj-num">ii.</div>
+      <h3>Un click para contactarte</h3>
+      <p>Botones para marcarte directo a ti o a tu socio, y para agendar cita por el auto que les interesa. Sin formularios que nadie lee.</p>
+    </div>
+    <div class="obj">
+      <div class="obj-num">iii.</div>
+      <h3>Todo bajo tu control</h3>
+      <p>Un panel donde manejas inventario y un CRM interno para que tus vendedores lleven seguimiento. Sin depender de nadie externo.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<section class="reveal" id="que">
+  <div class="section-eyebrow">Que incluye</div>
+  <h2 class="section-title">Lo que se va a construir</h2>
+  <p class="section-desc">Tres bloques: la pagina web publica con agenda y contacto, el panel admin conectado a una base de datos propia, y el CRM interno basico con configuracion de herramientas digitales.</p>
+
+  <div class="feat-cols">
+    <div class="feat-group">
+      <div class="feat-header">
+        <span class="feat-num">01</span>
+        <span class="feat-label">Pagina web publica</span>
+      </div>
+      <ul class="feat-list">
+        <li class="feat-item"><strong>Inicio</strong><span class="feat-desc">Autos destacados, mapa y botones de contacto</span></li>
+        <li class="feat-item"><strong>Catalogo de inventario</strong><span class="feat-desc">Todos los autos con filtros por marca, ano y precio</span></li>
+        <li class="feat-item"><strong>Detalle del auto</strong><span class="feat-desc">Galeria de fotos, precio y datos completos</span></li>
+        <li class="feat-item"><strong>Agendar cita por auto</strong><span class="feat-desc">Al hacer click en un auto, el cliente elige dia y hora</span></li>
+        <li class="feat-item"><strong>Llamar al dueno</strong><span class="feat-desc">Boton directo que marca tu numero desde el celular</span></li>
+        <li class="feat-item"><strong>Llamar al socio</strong><span class="feat-desc">Boton separado con nombre visible, UX clara</span></li>
+        <li class="feat-item"><strong>Facil de navegar</strong><span class="feat-desc">Menu simple, directo al grano, movil primero</span></li>
+        <li class="feat-item"><strong>SEO y dominio propio</strong><span class="feat-desc">riseautos.mx optimizado para Google</span></li>
+      </ul>
+    </div>
+
+    <div class="feat-group">
+      <div class="feat-header">
+        <span class="feat-num">02</span>
+        <span class="feat-label">Panel admin + base de datos</span>
+      </div>
+      <ul class="feat-list">
+        <li class="feat-item"><strong>Subir autos</strong><span class="feat-desc">Agregar un auto nuevo en minutos, con fotos</span></li>
+        <li class="feat-item"><strong>Editar precios</strong><span class="feat-desc">Cambiar precio sin depender de nadie externo</span></li>
+        <li class="feat-item"><strong>Subir galeria de fotos</strong><span class="feat-desc">Arrastras y sueltas, orden personalizable</span></li>
+        <li class="feat-item"><strong>Marcar vendido o borrar</strong><span class="feat-desc">Quitar del catalogo con un click</span></li>
+        <li class="feat-item"><strong>Destacar en inicio</strong><span class="feat-desc">Elegir que autos salen en la portada</span></li>
+        <li class="feat-item"><strong>Base de datos en Convex</strong><span class="feat-desc">Infraestructura escalable, tu equipo no la toca</span></li>
+        <li class="feat-item"><strong>Ver citas agendadas</strong><span class="feat-desc">Lista con nombre, auto y fecha</span></li>
+      </ul>
+    </div>
+
+    <div class="feat-group">
+      <div class="feat-header">
+        <span class="feat-num">03</span>
+        <span class="feat-label">CRM interno + herramientas</span>
+      </div>
+      <ul class="feat-list">
+        <li class="feat-item"><strong>CRM interno basico</strong><span class="feat-desc">Dentro de la misma pagina, no es otra herramienta</span></li>
+        <li class="feat-item"><strong>Lista de prospectos</strong><span class="feat-desc">Cada cita y llamada queda registrada</span></li>
+        <li class="feat-item"><strong>Seguimiento manual</strong><span class="feat-desc">Estados: nuevo, contactado, cita, cerrado, perdido</span></li>
+        <li class="feat-item"><strong>Asignacion de vendedor</strong><span class="feat-desc">Asignas manualmente a quien le toca cada prospecto</span></li>
+        <li class="feat-item"><strong>Notas por prospecto</strong><span class="feat-desc">Historial de contacto y comentarios del vendedor</span></li>
+        <li class="feat-item"><strong>Google Workspace</strong><span class="feat-desc">3 correos @riseautos.mx y Drive compartido</span></li>
+        <li class="feat-item"><strong>Infraestructura escalable</strong><span class="feat-desc">Listo para agregar automatizaciones despues</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="band reveal">
+  <div class="band-inner">
+    <div class="section-eyebrow">Bajo tu control</div>
+    <h2 class="section-title">Inventario + seguimiento, en un solo panel</h2>
+    <p class="section-desc">Un lugar donde manejas el inventario de autos y los prospectos que genera la pagina. Todo dentro del mismo sistema, sin apps externas.</p>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val">+</div><div class="kpi-name">Agregar auto</div></div>
+      <div class="kpi"><div class="kpi-val">$</div><div class="kpi-name">Editar precio</div></div>
+      <div class="kpi"><div class="kpi-val">Fotos</div><div class="kpi-name">Subir galeria</div></div>
+      <div class="kpi"><div class="kpi-val">CRM</div><div class="kpi-name">Seguimiento</div></div>
+      <div class="kpi"><div class="kpi-val">&#9733;</div><div class="kpi-name">Destacar en inicio</div></div>
+      <div class="kpi"><div class="kpi-val">Citas</div><div class="kpi-name">Ver agendadas</div></div>
+    </div>
+    <div class="aside-note">El panel corre sobre <strong>Convex Cloud</strong>, una base de datos moderna que escala sola. <strong>Ustedes no tienen que tocarla nunca</strong>: solo usan el panel.</div>
+  </div>
+</div>
+
+<section class="reveal">
+  <div class="section-eyebrow">El recorrido</div>
+  <h2 class="section-title">Asi funciona de principio a fin</h2>
+  <p class="section-desc">Desde que un cliente ve un auto hasta que tu vendedor le da seguimiento en el CRM.</p>
+  <div class="flow">
+    <div class="flow-item"><div class="flow-dot">1</div><h4>Llega a la web</h4><p>Desde Google, ads o redes</p></div>
+    <div class="flow-item"><div class="flow-dot">2</div><h4>Elige un auto</h4><p>Ve fotos y precio</p></div>
+    <div class="flow-item"><div class="flow-dot">3</div><h4>Agenda o llama</h4><p>Cita o telefono directo</p></div>
+    <div class="flow-item"><div class="flow-dot">4</div><h4>Entra al CRM</h4><p>Tu vendedor le da seguimiento</p></div>
+    <div class="flow-item"><div class="flow-dot">5</div><h4>Cierras la venta</h4><p>Cara a cara en el lote</p></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<section class="reveal" id="stack">
+  <div class="section-eyebrow">Arquitectura</div>
+  <h2 class="section-title">Como se conecta todo</h2>
+  <p class="section-desc">Una sola base tecnica que aguanta el crecimiento. Sin herramientas externas rentadas, sin amarres.</p>
+
+  <div class="stack-grid">
+    <div class="stack-layer stack-layer--web">
+      <div class="stack-layer-head">
+        <span class="stack-dot"></span>
+        <div class="stack-label">Capa publica</div>
+      </div>
+      <h3>Pagina web</h3>
+      <p>Lo que ve el cliente: catalogo, detalle de auto, agenda de cita, click-to-call.</p>
+      <div class="stack-meta">Next.js + Tailwind</div>
+    </div>
+
+    <div class="stack-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="stack-layer stack-layer--admin">
+      <div class="stack-layer-head">
+        <span class="stack-dot"></span>
+        <div class="stack-label">Capa privada</div>
+      </div>
+      <h3>Panel admin + CRM</h3>
+      <p>Lo que usan ustedes: inventario, prospectos, seguimiento de vendedores, citas agendadas.</p>
+      <div class="stack-meta">Protegido con usuario y contrasena</div>
+    </div>
+
+    <div class="stack-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+
+    <div class="stack-layer stack-layer--db">
+      <div class="stack-layer-head">
+        <span class="stack-dot"></span>
+        <div class="stack-label">Base de datos</div>
+      </div>
+      <h3>Convex Cloud</h3>
+      <p>Donde vive toda la informacion. Escala sola, ustedes no la tocan.</p>
+      <div class="stack-meta">Plan gratuito inicial</div>
+    </div>
+  </div>
+
+  <div class="aside-note aside-note--light" style="margin-top: 2.5rem;">
+    <strong>Por que Convex y no una hoja de calculo.</strong> Convex es una base de datos moderna que sincroniza en tiempo real. Si un vendedor marca un auto como vendido desde su celular, desaparece del catalogo publico al instante. Sin refrescar, sin conflictos, sin archivos duplicados.
+  </div>
+</section>
+
+<div class="band" id="precio">
+  <div class="band-inner reveal">
+    <div class="section-eyebrow">Inversion</div>
+    <h2 class="section-title">Lo que cuesta</h2>
+    <p class="section-desc">Una sola opcion: todo incluido, sin add-ons ni sorpresas.</p>
+
+    <div class="price-card">
+      <div class="price-card-header">
+        <div>
+          <div class="price-card-eyebrow">Pagina web + Panel + CRM interno</div>
+          <div class="price-card-title">Todo lo que Rise Autos necesita</div>
+        </div>
+        <div class="price-big"><small>MXN </small>$20,000</div>
+      </div>
+      <div class="price-card-sub">Pagina web profesional con inventario, click-to-call y todo el setup digital incluido. Panel admin conectado a base de datos en Convex Cloud. CRM interno basico para que tus vendedores lleven seguimiento manual. Google Workspace incluido para tu equipo.</div>
+
+      <table class="breakdown">
+        <thead><tr><th>Concepto</th><th>Costo</th></tr></thead>
+        <tbody>
+          <tr><td>Pagina web publica (catalogo, detalle, filtros, click-to-call, responsive, SEO)</td><td>$11,000</td></tr>
+          <tr><td>Panel admin + base de datos en Convex Cloud</td><td>$4,500</td></tr>
+          <tr><td>CRM interno basico (prospectos, seguimiento, asignacion)</td><td>$4,500</td></tr>
+          <tr><td>Google Workspace (3 correos corporativos + Drive)</td><td>Incluido</td></tr>
+          <tr><td>Config. digital (dominio, hosting, despliegue, integraciones)</td><td>Incluido</td></tr>
+          <tr class="bk-total"><td>Total unico</td><td>$20,000</td></tr>
+        </tbody>
+      </table>
+
+      <div class="price-note">
+        <strong>Sin costo mensual de software mio.</strong> La pagina corre en Vercel (gratis en este tamano). La base de datos Convex Cloud tiene plan gratuito suficiente para arrancar. Solo pagas el dominio anual (~$250 MXN) y Google Workspace por usuario (~$120 MXN/mes por correo si decides activarlo). No hay suscripciones ocultas ni cobros recurrentes mios.
+      </div>
+
+      <div class="price-note" style="border-color: var(--gold-light); margin-top: 0.75rem;">
+        <strong>Por que este precio.</strong> Estas pagando por una infraestructura que crece contigo: base de datos propia, CRM integrado, y un panel hecho a la medida de Rise Autos. No es un template de Wix ni un CRM de renta. Todo queda tuyo, sin amarrarte a ninguna herramienta externa.
+      </div>
+    </div>
+
+    <!-- SIGUIENTE FASE (opcional) -->
+    <div class="addons-title-row" style="margin-top: 3rem;">
+      <div class="addons-heading">Siguiente fase (opcional)</div>
+      <div class="addons-sub">Cuando el negocio lo pida</div>
+    </div>
+
+    <div class="aside-note" style="max-width: 720px;">
+      Este proyecto deja la base lista para crecer. Mas adelante se pueden agregar: pipelines visuales tipo Kanban, automatizaciones de WhatsApp Business (speed-to-lead y seguimientos programados), integracion con Facebook Ads para ver el costo por prospecto, dashboard de metricas avanzado, y asignacion automatica tipo round robin. Todo eso se suma a la misma pagina. <strong>No lo necesitas hoy para arrancar.</strong>
+    </div>
+  </div>
+
+  <div class="total-strip" id="totalBar">
+    <div class="total-strip-inner">
+      <div class="total-left">
+        <div>
+          <div class="total-label">Total</div>
+          <div class="total-val" id="totalVal"><small>MXN </small>$20,000</div>
+        </div>
+        <div class="total-note" id="totalNote">Web + Panel + CRM interno + Google Workspace</div>
+      </div>
+      <div class="total-right">
+        <div class="total-half"><label>Para arrancar (50%)</label><strong id="pay1">$10,000</strong></div>
+        <div class="total-half"><label>Al entregar (50%)</label><strong id="pay2">$10,000</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="reveal">
+  <div class="section-eyebrow">Forma de pago</div>
+  <h2 class="section-title">Dos pagos iguales</h2>
+  <p class="section-desc">Mitad para arrancar, mitad cuando este listo.</p>
+  <div class="pay-cols">
+    <div class="pay-card"><div class="pay-card-num">01</div><h3>Para arrancar</h3><p>50% al confirmar el proyecto.</p><div class="pay-amount" id="payA">$10,000</div></div>
+    <div class="pay-card"><div class="pay-card-num">02</div><h3>Al entregar</h3><p>50% con todo funcionando.</p><div class="pay-amount" id="payB">$10,000</div></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<section class="reveal">
+  <div class="section-eyebrow">Tiempos</div>
+  <h2 class="section-title">Plan de trabajo</h2>
+  <p class="section-desc">Cuatro semanas de principio a fin. Vas a ver avances desde la primera.</p>
+  <div class="tl">
+    <div class="tl-item"><div class="tl-week">S 1</div><div class="tl-body"><h4>Diseno y estructura</h4><p>Diseno visual de las paginas (inicio, catalogo, detalle de auto), arquitectura de la base de datos en Convex, setup de dominio, hosting y Google Workspace.</p></div></div>
+    <div class="tl-item"><div class="tl-week">S 2</div><div class="tl-body"><h4>Desarrollo web + panel</h4><p>Pagina web con inventario, detalle, filtros, agenda de citas, click-to-call. Panel admin funcional conectado a Convex para manejar el inventario.</p></div></div>
+    <div class="tl-item"><div class="tl-week">S 3</div><div class="tl-body"><h4>CRM interno</h4><p>Lista de prospectos, estados de seguimiento, asignacion de vendedor, notas. Integracion de las citas y llamadas de la pagina al CRM.</p></div></div>
+    <div class="tl-item"><div class="tl-week">S 4</div><div class="tl-body"><h4>Carga, pruebas y lanzamiento</h4><p>Carga inicial del inventario contigo, pruebas desde celular, capacitacion rapida al equipo para usar el panel y el CRM, y publicacion.</p></div></div>
+  </div>
+  <div class="aside-note aside-note--light">Los tiempos son estimados. La carga de fotos e informacion de los autos requiere colaboracion de tu parte durante la semana 4.</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-name">Rise Autos &mdash; Pagina Web</div>
+  <p>Propuesta por Christian &mdash; Abril 2026</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 80);
+});
+
+const obs = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('vis'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
