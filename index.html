@@ -272,7 +272,7 @@
   /* ─── FEATURES ─── */
   .feat-cols {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 0;
   }
 
@@ -281,7 +281,8 @@
     border-right: 1px solid var(--warm-100);
   }
 
-  .feat-group:last-child { border-right: none; }
+  .feat-group:nth-child(2n) { border-right: none; }
+  .feat-group:nth-child(-n+2) { border-bottom: 1px solid var(--warm-100); }
 
   .feat-header {
     display: flex;
@@ -335,6 +336,159 @@
     color: var(--warm-400);
     font-size: 0.76rem;
     line-height: 1.45;
+  }
+
+  /* ─── FISCAL IMPACT ─── */
+  .fiscal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .fiscal-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .fiscal-card:hover {
+    border-color: var(--warm-200);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 28px rgba(0,0,0,0.06);
+  }
+
+  .fiscal-tag {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--gold-muted);
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+
+  .fiscal-card h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+    color: var(--black);
+  }
+
+  .fiscal-card p {
+    font-size: 0.84rem;
+    color: var(--warm-400);
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+  }
+
+  .fiscal-card p:last-child { margin-bottom: 0; }
+
+  .fiscal-example {
+    margin-top: 1.25rem;
+    padding: 1rem 1.25rem;
+    background: var(--cream);
+    border-radius: 10px;
+    font-size: 0.78rem;
+    color: var(--warm-500);
+    line-height: 1.65;
+  }
+
+  .fiscal-example strong { color: var(--black); font-weight: 600; }
+
+  .fiscal-numbers {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .fiscal-num-item {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .fiscal-num-item .label {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-400);
+    margin-bottom: 0.25rem;
+  }
+
+  .fiscal-num-item .value {
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--black);
+  }
+
+  .fiscal-num-item .value.muted { color: var(--warm-400); text-decoration: line-through; }
+  .fiscal-num-item .value.gold { color: var(--gold); }
+
+  .cost-section {
+    margin-top: 3rem;
+  }
+
+  .cost-intro {
+    font-size: 0.88rem;
+    color: var(--warm-400);
+    line-height: 1.75;
+    max-width: 680px;
+    margin-bottom: 1.75rem;
+  }
+
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .cost-table thead {
+    background: var(--cream);
+  }
+
+  .cost-table th {
+    text-align: left;
+    padding: 1rem 1.25rem;
+    font-family: var(--display);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--warm-500);
+    border-bottom: 1px solid var(--sand);
+  }
+
+  .cost-table td {
+    padding: 1.1rem 1.25rem;
+    font-size: 0.84rem;
+    color: var(--black);
+    border-bottom: 1px solid var(--sand);
+  }
+
+  .cost-table tr:last-child td { border-bottom: none; }
+
+  .cost-table td.cost-amount {
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .cost-table td.cost-muted {
+    color: var(--warm-400);
+    font-size: 0.78rem;
   }
 
   /* ─── DARK BAND ─── */
@@ -1436,6 +1590,9 @@
     .objectives { grid-template-columns: 1fr; }
     .feat-cols { grid-template-columns: 1fr; }
     .feat-group { border-right: none; border-bottom: 1px solid var(--warm-100); }
+    .fiscal-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .cost-table { font-size: 0.78rem; }
+    .cost-table th, .cost-table td { padding: 0.85rem 0.9rem; }
     .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .flow { grid-template-columns: repeat(3, 1fr); }
     .m-cards { grid-template-columns: 1fr 1fr; }
@@ -1524,7 +1681,7 @@
 <section class="reveal" id="que">
   <div class="section-eyebrow">Que incluye</div>
   <h2 class="section-title">Lo que se va a construir</h2>
-  <p class="section-desc">Tres bloques: la pagina web publica con agenda y contacto, el panel admin conectado a una base de datos propia, y el CRM interno basico con configuracion de herramientas digitales.</p>
+  <p class="section-desc">Cuatro bloques: la pagina web publica con agenda y contacto, el panel admin conectado a una base de datos propia, el CRM interno basico con configuracion de herramientas digitales, y el modulo de facturacion fiscal con timbrado en tiempo real ante el SAT.</p>
 
   <div class="feat-cols">
     <div class="feat-group">
@@ -1575,6 +1732,103 @@
         <li class="feat-item"><strong>Infraestructura escalable</strong><span class="feat-desc">Listo para agregar automatizaciones despues</span></li>
       </ul>
     </div>
+
+    <div class="feat-group">
+      <div class="feat-header">
+        <span class="feat-num">04</span>
+        <span class="feat-label">Modulo de facturacion fiscal</span>
+      </div>
+      <ul class="feat-list">
+        <li class="feat-item"><strong>Dos formas de facturar</strong><span class="feat-desc">Desde el CRM al cerrar venta o directo en el panel sin pasar por CRM</span></li>
+        <li class="feat-item"><strong>Siempre con confirmacion</strong><span class="feat-desc">Resumen de datos antes de timbrar, nunca automatico</span></li>
+        <li class="feat-item"><strong>Complemento Vehiculos Usados</strong><span class="feat-desc">Se adjunta solo si el vendedor es particular sin actividad empresarial</span></li>
+        <li class="feat-item"><strong>Timbrado en tiempo real</strong><span class="feat-desc">Factura valida ante el SAT en segundos, sin portal manual</span></li>
+        <li class="feat-item"><strong>Deteccion automatica del vendedor</strong><span class="feat-desc">Identifica particular, persona fisica o empresa y actua en consecuencia</span></li>
+        <li class="feat-item"><strong>Historial de CFDIs</strong><span class="feat-desc">Cada unidad vendida queda con su comprobante vinculado</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="reveal" id="fiscal">
+  <div class="section-eyebrow">Por que el modulo 04 importa</div>
+  <h2 class="section-title">Impacto fiscal real</h2>
+  <p class="section-desc">El modulo de facturacion no es decorativo. Cambia directamente cuanto ISR paga el lote por cada venta y deja la operacion blindada ante el SAT. Aqui lo que resuelve.</p>
+
+  <div class="fiscal-grid">
+    <div class="fiscal-card">
+      <span class="fiscal-tag">ISR</span>
+      <h3>Impuesto Sobre la Renta</h3>
+      <p>Cuando el lote compra un vehiculo a un particular que no puede facturar, no existe comprobante fiscal del costo de adquisicion. El SAT lo ve como ingreso completo y cobra ISR sobre el precio de venta total, no sobre la ganancia real.</p>
+      <p>Con el CFDI de adquisicion y el <strong>Complemento de Vehiculos Usados</strong>, el costo de compra queda registrado fiscalmente. El ISR se calcula unicamente sobre la utilidad real.</p>
+      <div class="fiscal-example">
+        <strong>Ejemplo:</strong> venden un auto en $900,000 que compraron en $870,000.
+        <div class="fiscal-numbers">
+          <div class="fiscal-num-item">
+            <div class="label">Sin complemento</div>
+            <div class="value muted">ISR s/ $900,000</div>
+          </div>
+          <div class="fiscal-num-item">
+            <div class="label">Con complemento</div>
+            <div class="value gold">ISR s/ $30,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fiscal-card">
+      <span class="fiscal-tag">IVA</span>
+      <h3>Impuesto al Valor Agregado</h3>
+      <p>La compra de un vehiculo usado a un particular no genera IVA &mdash; esta exenta. El complemento documenta correctamente esa operacion ante el SAT, dejando claro que no hay IVA omitido en la adquisicion y que la estructura fiscal de la operacion es correcta.</p>
+      <p><strong>Nota:</strong> el IVA de la venta final al comprador del vehiculo sigue aplicando normalmente. El complemento no elimina ese IVA, pero garantiza que la operacion quede bien documentada y sin observaciones del SAT.</p>
+    </div>
+  </div>
+
+  <div class="aside-note aside-note--light" style="margin-top: 2rem;">
+    Cumplimiento con la <strong>Regla 2.7.1.10</strong> de la Resolucion Miscelanea Fiscal. Para el tratamiento especifico de cada operacion, el contador del lote debe validar caso por caso.
+  </div>
+
+  <div class="cost-section">
+    <div class="section-eyebrow" style="margin-bottom: 0.5rem;">Transparencia</div>
+    <h3 class="section-title" style="font-size: 1.6rem; margin-bottom: 0.75rem;">Costos de plataformas externas</h3>
+    <p class="cost-intro">Para que el modulo de facturacion funcione, el sistema se conecta a Facturapi, un Proveedor Autorizado de Certificacion (PAC) registrado ante el SAT. <strong>Estos costos los paga Rise Autos directamente a cada plataforma &mdash; no pasan por mi ni representan un cobro adicional de mi parte.</strong></p>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Costo</th>
+          <th>Quien cobra</th>
+          <th>Frecuencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Suscripcion Facturapi API</td>
+          <td class="cost-amount">$299 MXN</td>
+          <td class="cost-muted">Facturapi</td>
+          <td class="cost-muted">Mensual</td>
+        </tr>
+        <tr>
+          <td>Timbre por CFDI emitido</td>
+          <td class="cost-amount">$0.60 MXN</td>
+          <td class="cost-muted">Facturapi (PAC autorizado SAT)</td>
+          <td class="cost-muted">Por factura</td>
+        </tr>
+        <tr>
+          <td>Dominio riseautos.mx</td>
+          <td class="cost-amount">~$250 MXN</td>
+          <td class="cost-muted">Proveedor de dominio</td>
+          <td class="cost-muted">Anual</td>
+        </tr>
+        <tr>
+          <td>Google Workspace</td>
+          <td class="cost-amount">~$120 MXN</td>
+          <td class="cost-muted">Google</td>
+          <td class="cost-muted">Mensual por usuario</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
